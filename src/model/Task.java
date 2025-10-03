@@ -1,15 +1,14 @@
 import java.time.LocalDateTime;
 import java.util.UUID;
-import model.Category;
 
 enum Priority {
-    LOW,
-    MEDIUM,
-    HIGH
+  LOW,
+  MEDIUM,
+  HIGH
 }
 
-public class Task{
-   private UUID id;
+public class Task {
+  private UUID id;
   private String title;
   private String description;
   private boolean isCompleted;
@@ -17,12 +16,17 @@ public class Task{
   private Priority priority;
   private Category category;
 
-  public Task(){
+  public Task() {
     this.id = UUID.randomUUID();
     this.isCompleted = false;
   }
 
-  public Task(String title, String description, LocalDateTime dueDate, Priority priority, Category category){
+  public Task(
+      String title,
+      String description,
+      LocalDateTime dueDate,
+      Priority priority,
+      Category category) {
     this.id = UUID.randomUUID();
     this.title = title;
     this.description = description;
@@ -33,66 +37,105 @@ public class Task{
   }
 
   // Getters and Setters
-  
-  //Getters
-  
-  public UUID getId(){
+
+  // Getters
+
+  public UUID getId() {
     return id;
   }
 
-  public String getTitle(){
-    return title; 
+  public String getTitle() {
+    return title;
   }
 
-  public String getDescription(){
+  public String getDescription() {
     return description;
   }
 
-  public boolean getIsCompleted(){
+  public boolean getIsCompleted() {
     return isCompleted;
   }
 
-  public LocalDateTime getDueDate(){
+  public LocalDateTime getDueDate() {
     return dueDate;
   }
 
-  public Priority getPriority(){
+  public Priority getPriority() {
     return priority;
   }
 
-  public String getCategory(){
+  public Category getCategory() {
     return category;
   }
 
-  //Setters
+  // Setters
 
-  public void setTitle(String title){
+  public void setTitle(String title) {
     this.title = title;
   }
 
-  public void setDescription(String description){
+  public void setDescription(String description) {
     this.description = description;
   }
 
-  public void setIsCompleted(boolean isCompleted){
+  public void setIsCompleted(boolean isCompleted) {
     this.isCompleted = isCompleted;
   }
 
-  public void setDueDate(LocalDateTime dueDate){
+  public void setDueDate(LocalDateTime dueDate) {
     this.dueDate = dueDate;
   }
 
-  public void setPriority(Priority priority){
+  public void setPriority(Priority priority) {
     this.priority = priority;
   }
 
-  public void setCategory(String category){
+  public void setCategory(Category category) {
     this.category = category;
   }
 
+  // Util methods
+  public void toggleCompletion() {
+    this.isCompleted = !this.isCompleted; // inversează direct
+  }
 
+  public boolean isOverdue() {
 
+    return this.dueDate != null && this.dueDate.isBefore(LocalDateTime.now());
+  }
 
+  public String toString() {
+    return "Task ID: "
+        + id.toString()
+        + "\n"
+        + "Title: "
+        + title
+        + "\n"
+        + "Description: "
+        + description
+        + "\n"
+        + "Completed: "
+        + isCompleted
+        + "\n"
+        + "Due Date: "
+        + dueDate.toString()
+        + "\n"
+        + "Priority: "
+        + priority.toString()
+        + "\n"
+        + "Category: "
+        + (category != null ? category.getTitle() : "None")
+        + "\n";
+  }
 
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Task task = (Task) obj;
+    return id.equals(task.id);
+  }
 
+  public int hashCode() {
+    return id.hashCode();
+  }
 }

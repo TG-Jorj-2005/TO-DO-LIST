@@ -1,19 +1,18 @@
-package model;
 
-public enum Category{
+public enum Category {
     ACASA("Acasă"),
     SCOALA("Școală"),
     MUNCA("Muncă"),
     PERSONAL("Personal"),
     CUMPARATURI("Cumpărături");
-    
-    private String displayName;
-    
+
+    private String Title;
+
     Category(String displayName) {
-        this.displayName = displayName;
+        this.Title = displayName;
     }
-    
-    public String getDisplayName() {
-        return displayName;
+
+    public String getTitle() {
+        return Title;
     }
 }
