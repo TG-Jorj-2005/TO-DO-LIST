@@ -14,13 +14,13 @@ public class Task {
     creare = LocalDateTime.now();
     id = UUID.randomUUID();
     title = "";
-    Descriere = "";
+    descriere = "";
     finalizat = false;
   }
 
-  public Task(String title, String Descriere, boolean finalizat) {
+  public Task(String title, String descriere, boolean finalizat) {
     this.title = title;
-    descriere = Descriere;
+    this.descriere = descriere;
     this.finalizat = finalizat;
   }
 
