@@ -1,28 +1,27 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class Task {
+public class event {
   private UUID id;
   private LocalDateTime data_creare;
-  private String title;
-  private String detail;
+  private String title_and_detail;
   private LocalDateTime deadline;
   private boolean completed;
+  private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-  public Task() {
+  public event() {
     id = UUID.randomUUID();
     data_creare = LocalDateTime.now();
-    title = "";
-    detail = "";
+    title_and_detail = "";
     completed = false;
-    LocalDateTime deadline = null;
+    deadline = null;
   }
 
-  public Task(String title, String detail, boolean completed, LocalDateTime deadline) {
-    this.title = title;
-    this.detail = detail;
+  public event(String title_and_detail, boolean completed, LocalDateTime deadline) {
+    this.title_and_detail = title_and_detail;
     this.completed = completed;
     id = UUID.randomUUID();
     data_creare = LocalDateTime.now();
@@ -47,28 +46,12 @@ public class Task {
     this.data_creare = data_creare;
   }
 
-  public String getTitle() {
-    return title;
+  public String getTitle_and_detail() {
+    return title_and_detail;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDetail() {
-    return detail;
-  }
-
-  public void setDetail(String detail) {
-    this.detail = detail;
-  }
-
-  public boolean isCompleted() {
-    return completed;
-  }
-
-  public void setCompleted(boolean completed) {
-    this.completed = completed;
+  public void setTitle_and_detail(String title_and_detail) {
+    this.title_and_detail = title_and_detail;
   }
 
   public LocalDateTime getDeadline() {
@@ -77,5 +60,13 @@ public class Task {
 
   public void setDeadline(LocalDateTime deadline) {
     this.deadline = deadline;
+  }
+
+  public boolean isCompleted() {
+    return completed;
+  }
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
   }
 }
