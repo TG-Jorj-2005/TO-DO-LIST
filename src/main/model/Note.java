@@ -1,16 +1,15 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Note {
-  private UUID id;
+  private static int id;
   private LocalDateTime data_creare;
   private String content;
   private static final int MAX_LENGTH = 1000;
 
   public Note() {
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
     content = "";
   }
@@ -21,18 +20,14 @@ public class Note {
           "Content exceeds maximum length of " + MAX_LENGTH + " characters.");
     }
     this.content = content;
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
   }
 
   // getters and setters
 
-  public UUID getId() {
+  public int getId() {
     return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   public LocalDateTime getData_creare() {

@@ -2,10 +2,9 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 public class event {
-  private UUID id;
+  private static int id = 0;
   private LocalDateTime data_creare;
   private String title_and_detail;
   private LocalDateTime deadline;
@@ -13,7 +12,7 @@ public class event {
   private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
   public event() {
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
     title_and_detail = "";
     completed = false;
@@ -23,18 +22,18 @@ public class event {
   public event(String title_and_detail, boolean completed, LocalDateTime deadline) {
     this.title_and_detail = title_and_detail;
     this.completed = completed;
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
     this.deadline = deadline;
   }
 
   // getters and setters
 
-  public UUID getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  public void setId(int id) {
     this.id = id;
   }
 

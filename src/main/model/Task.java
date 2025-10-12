@@ -1,10 +1,9 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Task {
-  private UUID id;
+  private int id;
   private LocalDateTime data_creare;
   private String title;
   private String detail;
@@ -12,7 +11,7 @@ public class Task {
   private boolean completed;
 
   public Task() {
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
     title = "";
     detail = "";
@@ -24,19 +23,15 @@ public class Task {
     this.title = title;
     this.detail = detail;
     this.completed = completed;
-    id = UUID.randomUUID();
+    id++;
     data_creare = LocalDateTime.now();
     this.deadline = deadline;
   }
 
   // getters and setters
 
-  public UUID getId() {
+  public int getId() {
     return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   public LocalDateTime getData_creare() {
