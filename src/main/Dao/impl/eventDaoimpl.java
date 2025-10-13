@@ -1,5 +1,6 @@
 package Dao.impl;
 
+import Dao.eventDao;
 import java.sql.*;
 import java.util.*;
 import model.event;

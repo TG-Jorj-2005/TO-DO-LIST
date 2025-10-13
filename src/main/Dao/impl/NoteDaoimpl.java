@@ -19,9 +19,9 @@ public class NoteDaoimpl implements NoteDao {
     String sql = "INSERT INTO Note (name, date, location) VALUES (?, ?, ?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, note.getContent());
-      pstmt.setDate(2, event.getData_creare());
-      pstmt.setInt(3, event.getId());
-      pstmt.setBoolean(4, event.isCompleted());
+      pstmt.setDate(2, note.getData_creare());
+      pstmt.setInt(3, note.getId());
+      pstmt.setBoolean(4, note.isCompleted());
       pstmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
