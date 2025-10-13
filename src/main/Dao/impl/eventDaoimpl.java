@@ -15,7 +15,7 @@ public class eventDaoimpl implements eventDao {
 
   @Override
   public void addevent(event event) {
-    String sql = "INSERT INTO events (name, date, location) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO events (name, date, location,completed) VALUES (?, ?, ?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, event.getTitle_and_detail());
       pstmt.setDate(2, event.getData_creare());
@@ -70,7 +70,7 @@ public class eventDaoimpl implements eventDao {
 
   @Override
   public void updateEvent(event event) {
-    String sql = "UPDATE events SET name = ?, date = ?, location = ? WHERE id = ?";
+    String sql = "UPDATE events SET name = ?, date = ?, location = ?,completed = ?, WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, event.getTitle_and_detail());
       pstmt.setDate(2, event.getData_creare());
