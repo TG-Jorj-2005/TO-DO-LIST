@@ -12,5 +12,7 @@ public interface TaskDao {
 
   Task getTaskById(int taksId);
 
+  void updateTask(Task task);
+
   List<Task> getAllTasks();
 }

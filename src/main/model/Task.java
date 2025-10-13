@@ -16,7 +16,7 @@ public class Task {
     title = "";
     detail = "";
     completed = false;
-    LocalDateTime deadline = null;
+    deadline = null;
   }
 
   public Task(String title, String detail, boolean completed, LocalDateTime deadline) {

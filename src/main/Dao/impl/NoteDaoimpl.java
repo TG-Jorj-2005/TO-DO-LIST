@@ -66,7 +66,6 @@ public class NoteDaoimpl implements NoteDao {
       pstmt.setDate(2, note.getData_creare());
       pstmt.setInt(3, note.getId());
       pstmt.setBoolean(4, note.isCompleted());
-      pstmt.setInt(5, note.getId());
       pstmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
