@@ -1,15 +1,13 @@
 package model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.LocalDateTime;
 
 public class event {
-  private static int id = 0;
+  private int id = 0;
   private LocalDateTime data_creare;
   private String title_and_detail;
   private LocalDateTime deadline;
   private boolean completed;
-  private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
   public event() {
     id++;
