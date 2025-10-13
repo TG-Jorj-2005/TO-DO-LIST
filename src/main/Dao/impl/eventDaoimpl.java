@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 import model.event;
 
-public class eventDaoimpl extends eventDao {
+public class eventDaoimpl implements eventDao {
 
   private Connection connection;
 

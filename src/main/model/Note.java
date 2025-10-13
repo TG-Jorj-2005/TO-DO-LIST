@@ -1,20 +1,22 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.sql.LocalDateTime;
 
 public class Note {
   private static int id;
   private LocalDateTime data_creare;
   private String content;
+  private boolean completed;
   private static final int MAX_LENGTH = 1000;
 
   public Note() {
     id++;
     data_creare = LocalDateTime.now();
     content = "";
+    completed = false;
   }
 
-  public Note(String content) {
+  public Note(String content, boolean completed) {
     if (content.length() > MAX_LENGTH) {
       throw new IllegalArgumentException(
           "Content exceeds maximum length of " + MAX_LENGTH + " characters.");
@@ -22,6 +24,7 @@ public class Note {
     this.content = content;
     id++;
     data_creare = LocalDateTime.now();
+    this.completed = completed;
   }
 
   // getters and setters
@@ -48,5 +51,13 @@ public class Note {
           "Content exceeds maximum length of " + MAX_LENGTH + " characters");
     }
     this.content = content;
+  }
+
+  public boolean isCompleted() {
+    return completed;
+  }
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
   }
 }
