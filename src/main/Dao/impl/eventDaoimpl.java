@@ -13,6 +13,7 @@ public class eventDaoimpl implements eventDao {
     this.connection = connection;
   }
 
+  @Override
   public void addevent(event event) {
     String sql = "INSERT INTO events (name, date, location) VALUES (?, ?, ?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -26,6 +27,7 @@ public class eventDaoimpl implements eventDao {
     }
   }
 
+  @Override
   public void deleteEvent(int eventId) {
     String sql = "DELETE FROM events WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -36,6 +38,7 @@ public class eventDaoimpl implements eventDao {
     }
   }
 
+  @Override
   public event getEventById(int eventId) {
     String sql = "SELECT * FROM events WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -50,6 +53,7 @@ public class eventDaoimpl implements eventDao {
     return null;
   }
 
+  @Override
   public List<event> getAllEvents() {
     List<event> events = new ArrayList<>();
     String sql = "SELECT * FROM events";
@@ -64,6 +68,7 @@ public class eventDaoimpl implements eventDao {
     return events;
   }
 
+  @Override
   public void updateEvent(event event) {
     String sql = "UPDATE events SET name = ?, date = ?, location = ? WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
