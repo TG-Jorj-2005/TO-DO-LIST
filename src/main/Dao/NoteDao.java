@@ -7,7 +7,7 @@ public interface NoteDao {
 
   void addNote(Note note);
 
-  void deleteTask(int NoteId);
+  void deleteNote(int NoteId);
 
   Note getNotebyId(int id);
 

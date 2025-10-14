@@ -15,8 +15,22 @@ public class NoteDaoimpl implements NoteDao {
     this.connection = connection;
   }
 
+  private void validateNote(Note n) throws Exception {
+    if (n.getContent() == null || n.getContent().isEmpty()) {
+      throw new Exception("Note content cannot be null or empty");
+    }
+    if (n.getData_creare() == null) {
+      throw new Exception("Note date cannot be null");
+    }
+    if (n.getId() <= 0) {
+      throw new Exception("Note ID must be a positive integer");
+    }
+    // Add more validation rules as needed
+  }
+
   @Override
   public void addNote(Note note) {
+    validateNote(note);
     String sql = "INSERT INTO Note (content, data_creare, completed) VALUES (?, ?, ?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, note.getContent());
@@ -40,7 +54,7 @@ public class NoteDaoimpl implements NoteDao {
   }
 
   @Override
-  public Note getNoteById(int Noteid) {
+  public Note getNotebyId(int Noteid) {
     String sql = "SELECT * FROM Note WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setInt(1, Noteid);
@@ -60,6 +74,7 @@ public class NoteDaoimpl implements NoteDao {
 
   @Override
   public void updateNote(Note note) {
+    validateNote(note);
     String sql = "UPDATE Note SET contetn = ?, data_creare = ?, id = ?, completed =? WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, note.getContent());

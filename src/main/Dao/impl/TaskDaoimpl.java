@@ -12,6 +12,22 @@ public class TaskDaoimpl implements TaskDao {
     this.connection = conect;
   }
 
+  private void validateTask(Task t) throws Exception {
+    if (t.getTitle() == null || t.getTitle().isEmpty()) {
+      throw new Exception("Task title cannot be null or empty");
+    }
+    if (t.getData_creare() == null) {
+      throw new Exception("Task creation date cannot be null");
+    }
+    if (t.getDeadline() == null) {
+      throw new Exception("Task deadline cannot be null");
+    }
+    if (t.getId() <= 0) {
+      throw new Exception("Task ID must be a positive integer");
+    }
+    // Add more validation rules as needed
+  }
+
   @Override
   public addTask(Task task) {
     String sql =

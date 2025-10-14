@@ -16,6 +16,17 @@ public class Note {
     completed = false;
   }
 
+  public Note(String content, LocalDateTime data_creare, int id, boolean completed) {
+    if (content.length() > MAX_LENGTH) {
+      throw new IllegalArgumentException(
+          "Content exceeds maximum length of " + MAX_LENGTH + " characters.");
+    }
+    this.content = content;
+    id++;
+    this.data_creare = data_creare;
+    this.completed = completed;
+  }
+
   public Note(String content, boolean completed) {
     if (content.length() > MAX_LENGTH) {
       throw new IllegalArgumentException(
