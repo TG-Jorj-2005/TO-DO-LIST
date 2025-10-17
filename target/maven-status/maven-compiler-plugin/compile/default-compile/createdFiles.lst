@@ -1,2 +1,6 @@
+util/DatabaseConnection.class
 Dao/TaskDao.class
+controller/TaskController.class
 model/Task.class
+service/TaskServices.class
+Dao/impl/TaskDaoimpl.class
