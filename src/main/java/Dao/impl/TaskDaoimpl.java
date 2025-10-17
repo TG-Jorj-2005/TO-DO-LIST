@@ -12,24 +12,8 @@ public class TaskDaoimpl implements TaskDao {
     this.connection = conect;
   }
 
-  private void validateTask(Task t) throws Exception {
-    if (t.getTitle() == null || t.getTitle().isEmpty()) {
-      throw new Exception("Task title cannot be null or empty");
-    }
-    if (t.getData_creare() == null) {
-      throw new Exception("Task creation date cannot be null");
-    }
-    if (t.getDeadline() == null) {
-      throw new Exception("Task deadline cannot be null");
-    }
-    if (t.getId() <= 0) {
-      throw new Exception("Task ID must be a positive integer");
-    }
-    // Add more validation rules as needed
-  }
-
   @Override
-  public addTask(Task task) {
+  public void addTask(Task task) {
     String sql =
         "INSERT INTO Task (id, title, data_creare, detail ,completed,deadline) VALUES (?, ?,"
             + " ?,?,?)";
@@ -60,7 +44,7 @@ public class TaskDaoimpl implements TaskDao {
 
   @Override
   public Task getTaskById(int taksId) {
-    string sql = "SELECT * FROM Task WHERE id = ?";
+    String sql = "SELECT * FROM Task WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setInt(1, taksId);
       ResultSet rs = pstmt.executeQuery();
@@ -77,7 +61,7 @@ public class TaskDaoimpl implements TaskDao {
   }
 
   @Override
-  public void updateTask(Task taks) {
+  public void updateTask(Task task) {
     String sql =
         "UPDATE Task SET id = ?,title = ?, data_creare = ?, detail = ? ,completed = ?, Date = ?"
             + " ,WHERE id = ?";
@@ -111,5 +95,6 @@ public class TaskDaoimpl implements TaskDao {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return tasks;
   }
 }

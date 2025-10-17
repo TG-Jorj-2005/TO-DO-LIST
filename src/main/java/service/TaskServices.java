@@ -39,13 +39,11 @@ public class TaskServices {
 
   public void updateTask(Task task) {
     try {
-      if (task.getTitle() == null
-          || task.getTitle().isEmpty()
-          || task.getTitle() == taskdao.getTaskById(task.getId()).getTitle()) {
+      if (task.getTitle() == null || task.getTitle().isEmpty()) {
         throw new Exception("Nume inexistent");
       }
 
-      if (task.getDetail() == null || task.getDetail().isEmpty() || ) {
+      if (task.getDetail() == null || task.getDetail().isEmpty()) {
         throw new Exception("Fara descriere");
       }
 
@@ -59,5 +57,14 @@ public class TaskServices {
       System.out.println("Erori : " + e.getMessage());
     }
     taskdao.updateTask(task);
+  }
+
+  public Task getTaskById(int id) {
+    try {
+      if (id < 0 && id > taskdao.getAllTasks().size()) throw new Exception("id necorespunzator");
+    } catch (Exception e) {
+      System.out.println("Erori: " + e.getMessage());
+    }
+    return taskdao.getTaskById(id);
   }
 }
