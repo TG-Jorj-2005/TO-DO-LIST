@@ -1,8 +1,14 @@
 package Dao.impl;
 
 import Dao.TaskDao;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.Date; // 🔹 Aici e cheia! Doar java.sql.Date
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import model.Task;
 
 public class TaskDaoimpl implements TaskDao {
@@ -43,21 +49,28 @@ public class TaskDaoimpl implements TaskDao {
   }
 
   @Override
-  public Task getTaskById(int taksId) {
+  public Task getTaskById(int taskId) {
     String sql = "SELECT * FROM Task WHERE id = ?";
+
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setInt(1, taksId);
+      pstmt.setInt(1, taskId);
       ResultSet rs = pstmt.executeQuery();
+
       if (rs.next()) {
-        String title_and_detail = rs.getString("title_and_detail");
-        Date data_creare = rs.getDate("data_creare");
         int id = rs.getInt("id");
+        String title = rs.getString("title");
+        String detail = rs.getString("detail");
         boolean completed = rs.getBoolean("completed");
-        return new Task(title_and_detail, data_creare, id, completed);
+        Date data_creare = rs.getDate("data_creare");
+        Date deadline = rs.getDate("deadline");
+
+        return new Task(id, title, detail, completed, data_creare, deadline);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
+    return null; // dacă nu s-a găsit task-ul
   }
 
   @Override
