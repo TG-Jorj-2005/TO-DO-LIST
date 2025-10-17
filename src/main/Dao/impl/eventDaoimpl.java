@@ -13,25 +13,8 @@ public class eventDaoimpl implements eventDao {
     this.connection = connection;
   }
 
-  private void validateEvent(event e) throws Exception {
-    if (e.getTitle_and_detail() == null || e.getTitle_and_detail().isEmpty()) {
-      throw new Exception("Event title cannot be null or empty");
-    }
-    if (e.getData_creare() == null) {
-      throw new Exception("Event date cannot be null");
-    }
-    if (e.getisCompleted() == null) {
-      throw new Exception("Event completion status cannot be null");
-    }
-    if (e.getId() <= 0) {
-      throw new Exception("Event ID must be a positive integer");
-    }
-    // Add more validation rules as needed
-  }
-
   @Override
   public void addevent(event event) {
-    validateEvent(event);
     String sql = "INSERT INTO events (name, date, location,completed) VALUES (?, ?, ?,?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, event.getTitle_and_detail());
@@ -88,7 +71,6 @@ public class eventDaoimpl implements eventDao {
 
   @Override
   public void updateEvent(event event) {
-    validateEvent(event);
     String sql = "UPDATE events SET name = ?, date = ?, location = ?,completed = ?, WHERE id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setString(1, event.getTitle_and_detail());
