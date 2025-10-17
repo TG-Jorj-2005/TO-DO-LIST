@@ -2,18 +2,15 @@ package service;
 
 import Dao.TaskDao;
 import Dao.impl.TaskDaoimpl;
+import java.sql.Connection;
 import java.util.List;
 import model.Task;
 
 public class TaskServices {
-  private TaskDao taskdao;
+  private final TaskDao taskdao;
 
-  public TaskServices(TaskDao task) {
-    taskdao = task;
-  }
-
-  public TaskServices() {
-    taskdao = new TaskDaoimpl();
+  public TaskServices(Connection connection) {
+    taskdao = new TaskDaoimpl(connection);
   }
 
   public void addTask(Task task) {
