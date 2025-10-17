@@ -20,10 +20,10 @@ public class TaskDaoimpl implements TaskDao {
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setInt(1, task.getId());
       pstmt.setString(2, task.getTitle());
-      pstmt.setDate(3, Date.valueOf(task.getData_creare().toLocalDate()));
+      pstmt.setDate(3, task.getData_creare());
       pstmt.setString(4, task.getDetail());
       pstmt.setBoolean(5, task.isCompleted());
-      pstmt.setDate(6, Date.valueOf(task.getDeadline().toLocalDate()));
+      pstmt.setDate(6, task.getDeadline());
 
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -68,10 +68,10 @@ public class TaskDaoimpl implements TaskDao {
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
       pstmt.setInt(1, task.getId());
       pstmt.setString(2, task.getTitle());
-      pstmt.setDate(3, Date.valueOf(task.getData_creare().toLocalDate()));
+      pstmt.setDate(3, task.getData_creare());
       pstmt.setString(4, task.getDetail());
       pstmt.setBoolean(5, task.isCompleted());
-      pstmt.setDate(6, Date.valueOf(task.getDeadline().toLocalDate()));
+      pstmt.setDate(6, task.getDeadline());
       pstmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -82,19 +82,25 @@ public class TaskDaoimpl implements TaskDao {
   public List<Task> getAllTasks() {
     List<Task> tasks = new ArrayList<>();
     String sql = "SELECT * FROM Task";
+
     try (Statement stmt = connection.createStatement()) {
       ResultSet rs = stmt.executeQuery(sql);
+
       while (rs.next()) {
-        tasks.add(
-            new Task(
-                rs.getString("title"),
-                rs.getString("detail"),
-                rs.getBoolean("completed"),
-                rs.getDate("deadline").toLocalDate().atStartOfDay()));
+        Task task = new Task();
+        task.setId(rs.getInt("id"));
+        task.setTitle(rs.getString("title"));
+        task.setDetail(rs.getString("detail"));
+        task.setCompleted(rs.getBoolean("completed"));
+        task.setData_creare(rs.getDate("data_creare"));
+        task.setDeadline(rs.getDate("deadline"));
+
+        tasks.add(task);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
     return tasks;
   }
 }

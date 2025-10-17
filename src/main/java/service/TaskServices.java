@@ -1,7 +1,8 @@
 package service;
 
 import Dao.TaskDao;
-import java.time.LocalDateTime;
+import Dao.impl.TaskDaoimpl;
+import java.util.List;
 import model.Task;
 
 public class TaskServices {
@@ -11,6 +12,10 @@ public class TaskServices {
     taskdao = task;
   }
 
+  public TaskServices() {
+    taskdao = new TaskDaoimpl();
+  }
+
   public void addTask(Task task) {
     try {
       if (task.getTitle() == null || task.getTitle().isEmpty()) {
@@ -18,17 +23,19 @@ public class TaskServices {
       }
 
       if (task.getDetail() == null || task.getDetail().isEmpty()) {
-        throw new Exception("Fara descriere");
+        throw new Exception("Fără descriere");
       }
 
       if (task.getData_creare() == null) {
-        task.setData_creare(LocalDateTime.now());
+        throw new Exception("Data creare lipsă");
       }
+
       if (task.getDeadline() == null) {
-        task.setDeadline(LocalDateTime.now());
+        throw new Exception("Deadline lipsă");
       }
+
     } catch (Exception e) {
-      System.out.println("Erori : " + e.getMessage());
+      System.out.println("Eroare la task ID " + task.getId() + ": " + e.getMessage());
     }
     taskdao.addTask(task);
   }
@@ -44,17 +51,19 @@ public class TaskServices {
       }
 
       if (task.getDetail() == null || task.getDetail().isEmpty()) {
-        throw new Exception("Fara descriere");
+        throw new Exception("Fără descriere");
       }
 
       if (task.getData_creare() == null) {
-        task.setData_creare(LocalDateTime.now());
+        throw new Exception("Data creare lipsă");
       }
+
       if (task.getDeadline() == null) {
-        task.setDeadline(LocalDateTime.now());
+        throw new Exception("Deadline lipsă");
       }
+
     } catch (Exception e) {
-      System.out.println("Erori : " + e.getMessage());
+      System.out.println("Eroare la task ID " + task.getId() + ": " + e.getMessage());
     }
     taskdao.updateTask(task);
   }
@@ -66,5 +75,34 @@ public class TaskServices {
       System.out.println("Erori: " + e.getMessage());
     }
     return taskdao.getTaskById(id);
+  }
+
+  public List<Task> getAllTasks() {
+    List<Task> tasks = taskdao.getAllTasks(); // iei lista o singură dată
+
+    for (Task task : tasks) {
+      try {
+        if (task.getTitle() == null || task.getTitle().isEmpty()) {
+          throw new Exception("Nume inexistent");
+        }
+
+        if (task.getDetail() == null || task.getDetail().isEmpty()) {
+          throw new Exception("Fără descriere");
+        }
+
+        if (task.getData_creare() == null) {
+          throw new Exception("Data creare lipsă");
+        }
+
+        if (task.getDeadline() == null) {
+          throw new Exception("Deadline lipsă");
+        }
+
+      } catch (Exception e) {
+        System.out.println("Eroare la task ID " + task.getId() + ": " + e.getMessage());
+      }
+    }
+
+    return tasks; // returnezi lista verificată
   }
 }

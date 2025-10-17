@@ -1,45 +1,34 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.sql.Date; // atenție, de la java.sql!
 
 public class Task {
   private int id;
-  private LocalDateTime data_creare;
   private String title;
   private String detail;
-  private LocalDateTime deadline;
   private boolean completed;
+  private Date data_creare;
+  private Date deadline;
 
-  public Task() {
-    id++;
-    data_creare = LocalDateTime.now();
-    title = "";
-    detail = "";
-    completed = false;
-    deadline = null;
-  }
+  public Task() {}
 
-  public Task(String title, String detail, boolean completed, LocalDateTime deadline) {
+  public Task(
+      int id, String title, String detail, boolean completed, Date data_creare, Date deadline) {
+    this.id = id;
     this.title = title;
     this.detail = detail;
     this.completed = completed;
-    id++;
-    data_creare = LocalDateTime.now();
+    this.data_creare = data_creare;
     this.deadline = deadline;
   }
 
-  // getters and setters
-
+  // --- Getters și Setters ---
   public int getId() {
     return id;
   }
 
-  public LocalDateTime getData_creare() {
-    return data_creare;
-  }
-
-  public void setData_creare(LocalDateTime data_creare) {
-    this.data_creare = data_creare;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getTitle() {
@@ -66,11 +55,19 @@ public class Task {
     this.completed = completed;
   }
 
-  public LocalDateTime getDeadline() {
+  public Date getData_creare() {
+    return data_creare;
+  }
+
+  public void setData_creare(Date data_creare) {
+    this.data_creare = data_creare;
+  }
+
+  public Date getDeadline() {
     return deadline;
   }
 
-  public void setDeadline(LocalDateTime deadline) {
+  public void setDeadline(Date deadline) {
     this.deadline = deadline;
   }
 }
