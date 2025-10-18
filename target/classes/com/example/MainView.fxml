@@ -25,7 +25,7 @@
             <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="+Add" />
             <Button mnemonicParsing="false" text="Inbox" />
             <Button mnemonicParsing="false" text="Delete" />
-            <Button mnemonicParsing="false" text="Calendar" />
+            <Button mnemonicParsing="false" text="Calendar3" />
          </children>
       </VBox>
       <HBox layoutX="87.0" prefHeight="400.0" prefWidth="513.0">
