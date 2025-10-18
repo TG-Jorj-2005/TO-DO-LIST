@@ -9,11 +9,12 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/MainView.fxml"));
     Scene scene = new Scene(loader.load());
 
     stage.setTitle("To-Do List");
     stage.setScene(scene);
+    stage.setResizable(true);
     stage.show();
   }
 
