@@ -1,1 +1,6 @@
+com/example/model/Task.class
+com/example/dao/DaoTaskimpl.class
 com/example/App.class
+com/example/controller/MainViewController.class
+com/example/util/DButil.class
+com/example/model/TaskDao.class

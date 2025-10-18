@@ -1,1 +1,7 @@
+/home/jorj/TO-DO-LIST/src/main/java/com/example/controller/AddTaskController.java
+/home/jorj/TO-DO-LIST/src/main/java/com/example/controller/MainViewController.java
+/home/jorj/TO-DO-LIST/src/main/java/com/example/util/DButil.java
+/home/jorj/TO-DO-LIST/src/main/java/com/example/model/Task.java
+/home/jorj/TO-DO-LIST/src/main/java/com/example/dao/DaoTaskimpl.java
 /home/jorj/TO-DO-LIST/src/main/java/com/example/App.java
+/home/jorj/TO-DO-LIST/src/main/java/com/example/model/TaskDao.java
