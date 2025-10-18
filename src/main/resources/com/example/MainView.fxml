@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.controller.MainViewController"
-            prefWidth="800.0" prefHeight="500.0">
+            prefWidth="950.0" prefHeight="560.0"
+            stylesheets="@styles.css">
 
-    <!-- Bara laterală stângă -->
-    <VBox alignment="TOP_CENTER" spacing="10.0"
-          AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-          prefWidth="100.0">
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          prefWidth="140.0">
         <children>
-            <ImageView fitWidth="80.0" preserveRatio="true">
+            <ImageView fitWidth="90.0" preserveRatio="true" styleClass="image-view">
                 <image>
-                    <Image url="@jrj3.png" />
+                    <Image url="@jrj3.png"/>
                 </image>
             </ImageView>
-            <Button text="+Add" prefWidth="80.0" />
-            <Button text="Inbox" prefWidth="80.0" />
-            <Button text="Delete" prefWidth="80.0" />
-            <Button text="Calendar3" prefWidth="80.0" />
+            <Button fx:id="add" text="Add Task" styleClass="primary" prefWidth="110"/>
+            <Button fx:id="delete" text="Delete" styleClass="danger" prefWidth="110"/>
+            <Button fx:id="inbox" text="Inbox" styleClass="secondary" prefWidth="110"/>
+            <Button fx:id="calendar" text="Calendar" styleClass="secondary" prefWidth="110"/>
         </children>
     </VBox>
 
-    <!-- Zona principală cu tabel -->
-    <AnchorPane AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="100.0"
-                AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+    <!-- Main content -->
+    <AnchorPane AnchorPane.topAnchor="15.0" AnchorPane.leftAnchor="160.0"
+                AnchorPane.rightAnchor="15.0" AnchorPane.bottomAnchor="15.0">
 
-        <TableView fx:id="taskTable" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0"
-                   AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+        <TableView fx:id="task"
+                   AnchorPane.topAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0"
+                   AnchorPane.bottomAnchor="0.0">
+
             <columns>
-                <TableColumn prefWidth="40.0" text="ID" />
-                <TableColumn prefWidth="100.0" text="Title" />
-                <TableColumn prefWidth="200.0" text="Detail" />
-                <TableColumn prefWidth="80.0" text="CheckBox" />
-                <TableColumn prefWidth="150.0" text="Deadline" />
+                <TableColumn fx:id="idColumn" prefWidth="60.0" text="ID"/>
+                <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title"/>
+                <TableColumn fx:id="detailColumn" prefWidth="250.0" text="Detail"/>
+                <TableColumn fx:id="completedColumn" prefWidth="100.0" text="Completed"/>
+                <TableColumn fx:id="deadlineColumn" prefWidth="150.0" text="Deadline"/>
             </columns>
         </TableView>
-
     </AnchorPane>
-
 </AnchorPane>

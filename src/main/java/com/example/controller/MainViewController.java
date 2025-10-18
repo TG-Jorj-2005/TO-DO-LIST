@@ -2,45 +2,61 @@ package com.example.controller;
 
 import com.example.dao.DaoTaskimpl;
 import com.example.model.Task;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainViewController {
+
   @FXML private Button add;
   @FXML private Button delete;
   @FXML private Button inbox;
   @FXML private Button calendar;
+
+  @FXML private TableView<Task> task;
+  @FXML private TableColumn<Task, Integer> idColumn;
+  @FXML private TableColumn<Task, String> titleColumn;
+  @FXML private TableColumn<Task, String> detailColumn;
+  @FXML private TableColumn<Task, Boolean> completedColumn;
+  @FXML private TableColumn<Task, String> deadlineColumn;
+
   private final DaoTaskimpl daoTaskimpl = new DaoTaskimpl();
-  @FXML TableView<Task> task;
 
   @FXML
-  public void initializare() {
+  public void initialize() {
+    setupColumns();
     handleAddButton();
     loadTask();
   }
 
+  private void setupColumns() {
+    idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+    detailColumn.setCellValueFactory(new PropertyValueFactory<>("detail"));
+    completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd MMM yyyy");
+    deadlineColumn.setCellValueFactory(
+        cellData -> {
+          LocalDate date = cellData.getValue().getDeadline();
+          String text = (date != null) ? fmt.format(date) : "";
+          return new ReadOnlyStringWrapper(text);
+        });
+  }
+
   @FXML
   private void handleAddButton() {
-    add.setOnAction(
-        event -> {
-          // Codul pentru a deschide fereastra de adăugare a unei sarcini noi
-        });
-    delete.setOnAction(
-        event -> {
-          // Codul pentru a șterge sarcina selectată din tabel
-        });
-    inbox.setOnAction(
-        event -> {
-          // Codul pentru a afișa sarcinile din inbox
-          // Poate implica filtrarea sarcinilor și actualizarea TableView
-        });
-    calendar.setOnAction(
-        event -> {
-          // Codul pentru a deschide vizualizarea calendarului
-          // Poate implica deschiderea unei noi ferestre sau schimbarea scenei
-        });
+    add.setOnAction(e -> openAddTask());
   }
 
   @FXML
@@ -49,5 +65,23 @@ public class MainViewController {
     tasks.clear();
     tasks.addAll(daoTaskimpl.getAllTask());
     task.setItems(tasks);
+  }
+
+  @FXML
+  private void openAddTask() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/AddTask.fxml"));
+      Parent root = loader.load();
+
+      Stage stage = new Stage();
+      stage.setTitle("Add Task");
+      stage.setScene(new Scene(root));
+      stage.initModality(Modality.APPLICATION_MODAL);
+      stage.showAndWait();
+
+      loadTask();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
