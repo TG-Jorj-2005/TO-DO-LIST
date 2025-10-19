@@ -37,6 +37,7 @@ public class MainViewController {
     setupColumns();
     handleAddButton();
     loadTask();
+    updateTaskisCompleted();
   }
 
   private void setupColumns() {
@@ -57,6 +58,7 @@ public class MainViewController {
   @FXML
   private void handleAddButton() {
     add.setOnAction(e -> openAddTask());
+    delete.setOnAction(e -> handleDeleteButton());
   }
 
   @FXML
@@ -83,5 +85,33 @@ public class MainViewController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @FXML
+  private void handleDeleteButton() {
+    Task selectedTask = task.getSelectionModel().getSelectedItem();
+    if (selectedTask != null) {
+      daoTaskimpl.deleteTask(selectedTask.getId());
+      loadTask();
+    }
+  }
+
+  @FXML
+  private void updateTaskisCompleted() {
+
+    task.setRowFactory(
+        tv -> {
+          TableRow<Task> row = new TableRow<>();
+          row.setOnMouseClicked(
+              event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                  Task rowData = row.getItem();
+                  rowData.setCompleted(!rowData.isCompleted());
+                  daoTaskimpl.updateTask(rowData);
+                  loadTask();
+                }
+              });
+          return row;
+        });
   }
 }

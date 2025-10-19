@@ -85,4 +85,60 @@ public class DaoTaskimpl {
       e.printStackTrace();
     }
   }
+
+  public void deleteTask(int id) {
+    String sqlDelete = "DELETE FROM tasks WHERE id = ?";
+    String sqlReindex =
+        """
+        UPDATE tasks
+        SET id = (
+            SELECT COUNT(*) + 1
+            FROM tasks AS t2
+            WHERE t2.id < tasks.id
+        );
+        """;
+    String sqlReset = "DELETE FROM sqlite_sequence WHERE name='tasks';"; // resetează AUTO INCREMENT
+
+    try (Connection conn = connect();
+        PreparedStatement stmt = conn.prepareStatement(sqlDelete)) {
+
+      // 1️⃣ Șterge taskul
+      stmt.setInt(1, id);
+      stmt.executeUpdate();
+      System.out.println("✅ Task șters cu succes!");
+
+      // 2️⃣ Reindexează ID-urile în ordine
+      try (Statement st = conn.createStatement()) {
+        st.executeUpdate(sqlReindex);
+        st.executeUpdate(sqlReset);
+      }
+
+      System.out.println("🔄 ID-urile au fost reindexate corect (SQLite)!");
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void updateTask(Task task) {
+    String sql = "UPDATE tasks SET title = ?, detail = ?, completed = ?, deadline = ? WHERE id = ?";
+    try (Connection conn = connect();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+      stmt.setString(1, task.getTitle());
+      stmt.setString(2, task.getDetail());
+      stmt.setBoolean(3, task.isCompleted());
+      if (task.getDeadline() != null) {
+        stmt.setDate(4, Date.valueOf(task.getDeadline()));
+      } else if (task.getDeadline().isBefore(LocalDate.now())) {
+        stmt.setNull(4, Types.DATE);
+      } else {
+        stmt.setNull(4, Types.DATE);
+      }
+      stmt.setInt(5, task.getId());
+      stmt.executeUpdate();
+      System.out.println("✅ Task actualizat cu succes!");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }
