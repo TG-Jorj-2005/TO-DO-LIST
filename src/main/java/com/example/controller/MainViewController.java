@@ -5,6 +5,8 @@ import com.example.model.Task;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,9 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MainViewController {
 
@@ -38,6 +43,9 @@ public class MainViewController {
     handleAddButton();
     loadTask();
     updateTaskisCompleted();
+    PauseTransition pauza = new PauseTransition(Duration.seconds(1));
+    pauza.setOnFinished(event -> statusTask());
+    pauza.play();
   }
 
   private void setupColumns() {
@@ -113,5 +121,26 @@ public class MainViewController {
               });
           return row;
         });
+  }
+
+  @FXML
+  private void statusTask() {
+
+    try {
+      for (Task i : daoTaskimpl.getAllTask()) {
+        long difDay = ChronoUnit.DAYS.between(LocalDate.now(), i.getDeadline());
+        if (difDay < 2 && difDay >= 0 && i.isCompleted() == false) {
+          Alert alert = new Alert(AlertType.INFORMATION);
+          alert.setTitle("Statusul Task ului");
+          alert.setHeaderText("Task ul cu deadline ul in incheiere");
+          alert.setContentText("==" + i.getId());
+          alert.showAndWait();
+        }
+      }
+
+    } catch (Exception e) {
+      System.out.println("Eroarea: " + e.getMessage());
+    }
+    loadTask();
   }
 }
